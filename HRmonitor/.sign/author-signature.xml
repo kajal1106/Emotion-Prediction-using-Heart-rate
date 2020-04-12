@@ -4,7 +4,7 @@
 <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"></SignatureMethod>
 <Reference URI=".DS_Store">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>cgqYizG2tFIO0/nbzXq5uqmMEq9y7GM6DYzgMh6nQ+Q=</DigestValue>
+<DigestValue>4HiYjt/6gYPHBldKpmRcJUKG06CCfXtXUkPEI/bjBFY=</DigestValue>
 </Reference>
 <Reference URI=".gitignore">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
@@ -20,7 +20,7 @@
 </Reference>
 <Reference URI="config.xml">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>l6pO0eqemP7csobxInyC/jtDwSf1UNv4E/BvOxG0JJ0=</DigestValue>
+<DigestValue>fNi1HWxNCerCf+4lbCFLrALuck3WxiFIoELYu9XO+pk=</DigestValue>
 </Reference>
 <Reference URI="css%2Ffork-awesome.min.css">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
@@ -124,7 +124,7 @@
 </Reference>
 <Reference URI="js%2Fmain.js">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"></DigestMethod>
-<DigestValue>gDmX0df9WXEdSswXrBRubxktUGg/xHZPo+w3fmcb+Bw=</DigestValue>
+<DigestValue>ch1bCPJypDsvLTlG4eRsS7Ds4Wahkw+8HKKfAVg4CHs=</DigestValue>
 </Reference>
 <Reference URI="#prop">
 <Transforms>
@@ -135,11 +135,11 @@
 </Reference>
 </SignedInfo>
 <SignatureValue>
-ROM+6tW0LZu1p09k9/x4aY+EAtIJJJXI037nwyWgTlObMgSz/dyWpn2a2UYmsNNiGhJVzK7Z4afS
-WB1K5FzndlgIacUq+RJRiNGiWHYag1vHsq3oszKCmMSqmPaScAFNX9noXk4ILj3zD6oHVFdRMjHA
-kaqi/pAjgodiZ9gZFSqoulKLj+p30xFbeCb92l6Jz5TgH2/DSBucRu3eDKYuW7R65j0c8cd657/8
-ljBecl6tOAeIesFRz1zGR51jByz4DoiJn3SSl/aCJ0hfy7ACuVXXOOFJRFwayOts71lTxY3YCcYI
-C2I2nBl4Cjqv9hay2BdrYGxM3b0HGbJZUQc2Ng==
+QmKHRZ+vCqAGYmFXU1IYUGBDDg72LWRHvVWuxvfybAfmb37XAMh16BjComm9T76ra2qgHF2uKERt
+MlhbAEeJ2+R5VJpCFQWNEiok/iEaFc2do0XFQJrz7vxnMFNMBpSDBj7nPHjoOPA+05xIXCH05W8v
+WQHSlNojZO6O3NrFuKMpTc4taRELkCgq+l9V06XDOSyiX0nclgj2OQ6LSlllVjfYWzS3B0YdrjO+
+WQ81PhhNXtgtQqg1VUkqKqi7CJN7ROMlhgrcbE5CPr0AVb7wQKIwMjEXzIo1x1jVYmvfWDtbIxp4
+rLdeZYSlen3UnRfTuIoC2JYB58Acv5P4smwahg==
 </SignatureValue>
 <KeyInfo>
 <X509Data>

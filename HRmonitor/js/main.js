@@ -12,14 +12,16 @@ var hrMin, hrMax, temp;
 var maxMon = document.getElementById('maxHR');
 var minMon = document.getElementById('minHR');
 var currentMon = document.getElementById('currentHR');
-var drempel = 10;
+var threshold = 10;
 var onOff = false;
 var heartRate = 0;
+var heartInterval = 0;
 
 if (tizen.preference.exists('hrMin')) {
 	hrMin = tizen.preference.getValue('hrMin');
 	minMon.innerHTML = hrMin;
 }
+
 if (tizen.preference.exists('hrMax')) {
 	hrMax = tizen.preference.getValue('hrMax');
 	maxMon.innerHTML = hrMax;
@@ -58,11 +60,10 @@ function startHRM() {
 		tizen.humanactivitymonitor.start("HRM", changedCallback, errorCallback);
 
 		setInterval(function() {
-			if (new Date().getTime() - startTime > 9000000) {
-				tizen.application.getCurrentApplication().exit();
+			if(heartRate > 0) {
+				ajax_call(heartRate, heartInterval);
 			}
-			ajax_call(heartRate);
-		}, 15000);
+		}, 500);
 
 	} catch (info) {
 		console.log(info);
@@ -70,7 +71,7 @@ function startHRM() {
 }
 
 function stopHRM() {
-	if (temp < drempel) {
+	if (temp < thresholdl) {
 		currentMon.innerHTML = "Go!";
 	}
 	try {
@@ -83,10 +84,10 @@ function stopHRM() {
 }
 
 function setMin() {
-	if (hrMin > temp && temp > drempel) {
+	if (hrMin > temp && temp > thresholdl) {
 		hrMin = temp;
 		minMon.innerHTML = hrMin;
-	} else if (hrMin === undefined && temp > drempel) {
+	} else if (hrMin === undefined && temp > thresholdl) {
 		hrMin = temp;
 		minMon.innerHTML = hrMin;
 	}
@@ -96,7 +97,7 @@ function setMax() {
 	if (hrMax < temp) {
 		hrMax = temp;
 		maxMon.innerHTML = hrMax;
-	} else if (hrMax === undefined && temp > drempel) {
+	} else if (hrMax === undefined && temp > thresholdl) {
 		hrMax = temp;
 		maxMon.innerHTML = hrMax;
 	}
@@ -104,28 +105,22 @@ function setMax() {
 
 function changedCallback(info) {
 	currentMon.disabled = true;
-	temp = info.heartRate;
-	if (temp > drempel) {
-		currentMon.style.color = "green";
-		currentMon.innerHTML = info.heartRate;
-		heartRate = info.heartRate;
-	} else if (temp < 0) {
-		stopHRM();
-		onOff = false;
-	}
+	currentMon.style.color = "green";
+	currentMon.innerHTML = info.heartRate;
+	heartRate = info.heartRate;
+	heartInterval = info.rRInterval;
 	setMin();
 	setMax();
 }
 
-function ajax_call(heartRate) {
-	const
-	xhr = new XMLHttpRequest();
+function ajax_call(heartRate, heartInterval) {
+	const xhr = new XMLHttpRequest();
 
 	xhr.onload = function() {
 		//
-	}
+	};
 
-	xhr.open("GET", "http://192.168.43.43:5000/?value=" + heartRate);
+	xhr.open("GET", "http://192.168.43.43:5000/?heart_rate=" + heartRate + "&rRInterval=" + heartInterval);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	xhr.send();
 }
@@ -201,16 +196,6 @@ document.addEventListener("webkitvisibilitychange", function(state) {
 			tizen.power.request('SCREEN', 'SCREEN_DIM');
 			if (onOff === true) {
 				startHRM();
-				// const xhr = new XMLHttpRequest();
-				//
-				// xhr.onload = function() {
-				// //
-				// }
-				//
-				// xhr.open("GET", "http://192.168.43.43:5000/?value=72");
-				// xhr.setRequestHeader("Content-Type",
-				// "application/x-www-form-urlencoded");
-				// xhr.send();
 			}
 		} catch (e3) {
 			console.log(e3 + " " + state);
@@ -220,65 +205,3 @@ document.addEventListener("webkitvisibilitychange", function(state) {
 	}
 
 });
-
-// const xhr = new XMLHttpRequest();
-//
-// xhr.onload = function() {
-// //
-// }
-//
-// xhr.open("GET", "http://192.168.43.43:5000/?value="+info.heartRate);
-// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-// xhr.send();
-
-//var listenerId;
-//
-//function errorCallback(error)
-//{
-//    console.log(error.name + ": " + error.message);
-//}
-//
-//function listener(label)
-//{
-//    console.log("Stress level: " + label);
-//}
-//
-// var ranges = [new tizen.StressMonitorDataRange("Normal",10, 15),
-//           new tizen.StressMonitorDataRange("Stress Alarm",15, 17)];
-//
-//try
-//{
-//    listenerId = tizen.humanactivitymonitor.addStressMonitorChangeListener(ranges, listener, errorCallback);
-//}
-//catch (error)
-//{
-//    console.log(error.name + ": " + error.message);
-//}
-//
-//function onchangedCB(info)
-//{
-//    console.log("score: " + info.stressScore);
-//}
-//
-//function onerrorCB(error)
-//{
-//    console.log("Error occurred, name: " + error.name + ", message: " + error.message);
-//}
-//
-//try
-//{
-//    tizen.humanactivitymonitor.start("STRESS_MONITOR", onchangedCB, onerrorCB,
-//                                     {callbackInterval: 1500, sampleInterval: 100});
-//}
-//catch (err)
-//{
-//    console.log(err.name + ": " + err.message);
-//}
-//
-//setTimeout(15000, function(){
-//	tizen.humanactivitymonitor.stop('STRESS_MONITOR');
-//	tizen.humanactivitymonitor.removeStressMonitorChangeListener(listenerId);
-//});
-
-var sensors = tizen.sensorservice.getAvailableSensors();
-console.log('Sensors in watch: ' + sensors.toString() );

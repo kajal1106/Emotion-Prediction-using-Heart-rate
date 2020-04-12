@@ -8,16 +8,16 @@ CORS(app)
 
 @app.route('/')
 def hello():
-    username = request.args.get('value')
-    print(username)
-
-
-    with open('stress1.csv', 'a+', newline='') as file:
-        fieldnames = ['timestamp', 'rate']
+    heartbeat = request.args.get('heart_rate')
+    heartrate = request.args.get('rRInterval')
+    print(heartbeat," ",heartrate)
+    
+    with open('rrsubject27.csv', 'a+', newline='') as file:
+        fieldnames = ['timestamp', 'beats','RR']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         now = time.strftime('%Y-%m-%d %H:%M:%S')
       
-        writer.writerow({'timestamp': now, 'rate': username})
+        writer.writerow({'timestamp': now, 'beats': heartbeat, 'RR': heartrate})
 
     return "Hello World!"
     
