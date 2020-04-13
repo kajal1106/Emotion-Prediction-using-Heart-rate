@@ -11,7 +11,10 @@ def hello():
     heartbeat = request.args.get('heart_rate')
     heartrate = request.args.get('rRInterval')
     print(heartbeat," ",heartrate)
-    
+    if(int(heartrate) > 1200):
+        heartrate = int(heartrate) - 400
+    elif(int(heartrate) < 400):
+        heartrate = int(heartrate) + 200
     with open('rrsubject27.csv', 'a+', newline='') as file:
         fieldnames = ['timestamp', 'beats','RR']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
